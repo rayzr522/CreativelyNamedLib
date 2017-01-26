@@ -1,0 +1,10 @@
+main: com.rayzr522.creativelynamedlib.CreativelyNamedLib
+name: CreativelyNamedLib
+version: 1.0.0
+description: A Bukkit library with a creative name!
+author: Rayzr
+commands:
+  cnltest:
+    description: "Various tests for CNL"
+    usage: "/cnltest [testName]"
+    permission: CreativelyNamedLib.test
