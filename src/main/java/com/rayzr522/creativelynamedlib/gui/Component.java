@@ -3,11 +3,14 @@
  */
 package com.rayzr522.creativelynamedlib.gui;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Consumer;
 
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
 
 import com.rayzr522.creativelynamedlib.utils.ItemFactory;
 import com.rayzr522.creativelynamedlib.utils.types.Point;
@@ -57,6 +60,7 @@ public class Component implements Cloneable {
      * @param item The item to use
      */
     public void setItem(ItemFactory item) {
+        Objects.requireNonNull(item, "item cannot be null!");
         this.item = item;
     }
 
@@ -156,31 +160,45 @@ public class Component implements Cloneable {
         }
 
         /**
-         * @param item
-         * @see com.rayzr522.creativelynamedlib.gui.Component#setItem(com.rayzr522.creativelynamedlib.utils.ItemFactory)
+         * @param item The item to set
          * @return This {@link Builder} instance
          */
-        public Builder setItem(ItemFactory item) {
+        public Builder item(ItemFactory item) {
             component.setItem(item);
             return this;
         }
 
         /**
-         * @param clickHandler
-         * @see com.rayzr522.creativelynamedlib.gui.Component#setClickHandler(java.util.function.Consumer)
+         * @param item The item to set
          * @return This {@link Builder} instance
          */
-        public Builder setClickHandler(Consumer<ClickEvent> clickHandler) {
+        public Builder item(ItemStack item) {
+            return item(ItemFactory.of(item));
+        }
+
+        /**
+         * @param item The item type to set
+         * @return This {@link Builder} instance
+         */
+        public Builder type(Material type) {
+            component.getItem().setType(type);
+            return this;
+        }
+
+        /**
+         * @param clickHandler
+         * @return This {@link Builder} instance
+         */
+        public Builder onClick(Consumer<ClickEvent> clickHandler) {
             component.setClickHandler(clickHandler);
             return this;
         }
 
         /**
          * @param renderHandler
-         * @see com.rayzr522.creativelynamedlib.gui.Component#setRenderHandler(com.rayzr522.creativelynamedlib.gui.RenderHandler)
          * @return This {@link Builder} instance
          */
-        public Builder setRenderHandler(RenderHandler renderHandler) {
+        public Builder onRender(RenderHandler renderHandler) {
             component.setRenderHandler(renderHandler);
             return this;
         }
@@ -189,18 +207,44 @@ public class Component implements Cloneable {
          * @param size The size to set
          * @return This {@link Builder} instance
          */
-        public Builder setSize(Size size) {
+        public Builder ofSize(Size size) {
             component.setSize(size);
             return this;
         }
 
         /**
-         * 
+         * @param width The width to set
+         * @param height The height to set
+         * @return This {@link Builder} instance
+         */
+        public Builder ofSize(int width, int height) {
+            return ofSize(Size.of(width, height));
+        }
+
+        /**
          * @param text The display name to set
          * @return This {@link Builder} instance
          */
-        public Builder setName(String text) {
+        public Builder named(String text) {
             component.getItem().setName(text);
+            return this;
+        }
+
+        /**
+         * @param lore The lore to set
+         * @return This {@link Builder} instance
+         */
+        public Builder withLore(List<String> lore) {
+            component.getItem().setLore(lore);
+            return this;
+        }
+
+        /**
+         * @param lore The lore to set
+         * @return This {@link Builder} instance
+         */
+        public Builder withLore(String... lore) {
+            component.getItem().setLore(lore);
             return this;
         }
 
@@ -209,7 +253,7 @@ public class Component implements Cloneable {
          * @param amount The amount to set
          * @return This {@link Builder} instance
          */
-        public Builder setAmount(int amount) {
+        public Builder withAmount(int amount) {
             component.getItem().setAmount(amount);
             return this;
         }
@@ -218,8 +262,19 @@ public class Component implements Cloneable {
          * @param durability The durability to set
          * @return This {@link Builder} instance
          */
-        public Builder setDurability(int durability) {
+        public Builder withDurability(int durability) {
             component.getItem().setDurability(durability);
+            return this;
+        }
+
+        /**
+         * This will error if you call it on non-colorable items
+         * 
+         * @param color The color to set
+         * @return This {@link Builder} instance
+         */
+        public Builder colored(DyeColor color) {
+            component.getItem().setColor(color);
             return this;
         }
 

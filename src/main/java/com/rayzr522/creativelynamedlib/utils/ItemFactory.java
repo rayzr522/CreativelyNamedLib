@@ -5,9 +5,11 @@ package com.rayzr522.creativelynamedlib.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -19,6 +21,12 @@ import com.rayzr522.creativelynamedlib.utils.text.TextUtils;
  *
  */
 public class ItemFactory {
+
+    private static final List<Material> COLORABLE = Collections.unmodifiableList(Arrays.asList(
+            Material.WOOL, Material.STAINED_CLAY, Material.INK_SACK, Material.STAINED_GLASS, Material.STAINED_GLASS_PANE, Material.CARPET, Material.BANNER));
+
+    private static final List<Material> COLOR_INVERT = Collections.unmodifiableList(Arrays.asList(
+            Material.INK_SACK, Material.BANNER));
 
     private ItemStack base;
 
@@ -109,6 +117,24 @@ public class ItemFactory {
      */
     public ItemFactory setDamage(int damage) {
         return setDurability(damage);
+    }
+
+    /**
+     * Attempts to set the color of this item. This will throw an {@link IllegalStateException} if you call it on an item that isn't colorable (e.g. something other than wool, carpet, stained glass, ink sack, etc.)
+     * 
+     * @param color The color to set
+     * @return This {@link ItemFactory} instance
+     * @throws IllegalStateException If the item is not a colorable type
+     */
+    public ItemFactory setColor(DyeColor color) {
+        if (!COLORABLE.contains(base.getType())) {
+            throw new IllegalStateException("item is not colorable!");
+        }
+
+        @SuppressWarnings("deprecation")
+        byte data = (byte) (COLOR_INVERT.contains(base.getType()) ? 15 - color.getData() : color.getData());
+
+        return setDurability(data);
     }
 
     /**
