@@ -10,8 +10,8 @@ import java.util.function.Consumer;
 import org.bukkit.Material;
 
 import com.rayzr522.creativelynamedlib.utils.ItemFactory;
-import com.rayzr522.creativelynamedlib.utils.Point;
-import com.rayzr522.creativelynamedlib.utils.Size;
+import com.rayzr522.creativelynamedlib.utils.types.Point;
+import com.rayzr522.creativelynamedlib.utils.types.Size;
 
 /**
  * @author Rayzr

@@ -4,7 +4,7 @@
 package com.rayzr522.creativelynamedlib.gui;
 
 import com.rayzr522.creativelynamedlib.utils.ItemFactory;
-import com.rayzr522.creativelynamedlib.utils.Point;
+import com.rayzr522.creativelynamedlib.utils.types.Point;
 
 /**
  * A render-handler for components.

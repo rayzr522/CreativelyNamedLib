@@ -1,8 +1,9 @@
 /**
  * 
  */
-package com.rayzr522.creativelynamedlib.utils;
+package com.rayzr522.creativelynamedlib.utils.text;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,6 +18,9 @@ public class TextUtils {
 
     /**
      * Translates ampersand (<code>&</code>) color/formatting codes to internal Minecraft color/formatting codes that use the section sign (<code>\u00A7</code>)
+     * <br>
+     * <br>
+     * This method <code>null</code>-forwards, so if the input is <code>null</code>, the method will return <code>null</code>.
      * 
      * @param input The input text to convert
      * @return The converted text
@@ -27,16 +31,22 @@ public class TextUtils {
 
     /**
      * Applies {@link #colorize(String)} to all elements in a {@link List}
+     * <br>
+     * <br>
+     * This method <code>null</code>-forwards, so if the input is <code>null</code>, the method will return <code>null</code>.
      * 
      * @param input The input list of text to convert
      * @return The converted list
      */
     public static List<String> colorize(List<String> input) {
-        return input == null ? null : input.stream().map(TextUtils::colorize).collect(Collectors.toList());
+        return input == null ? null : input.stream().map(TextUtils::colorize).collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
      * Removes all color/formatting codes from the given input
+     * <br>
+     * <br>
+     * This method <code>null</code>-forwards, so if the input is <code>null</code>, the method will return <code>null</code>.
      * 
      * @param input The text to strip formatting from
      * @return The simplified text
@@ -47,6 +57,9 @@ public class TextUtils {
 
     /**
      * Applies {@link #stripColor(String)} to all elements in a {@link List}
+     * <br>
+     * <br>
+     * This method <code>null</code>-forwards, so if the input is <code>null</code>, the method will return <code>null</code>.
      * 
      * @param input The input list of text to strip formatting from
      * @return The simplified list
@@ -57,6 +70,9 @@ public class TextUtils {
 
     /**
      * Translates internal Minecraft color/formatting codes that use the section sign (<code>\u00A7</code>) to ampersand (<code>&</code>) color/formatting codes
+     * <br>
+     * <br>
+     * This method <code>null</code>-forwards, so if the input is <code>null</code>, the method will return <code>null</code>.
      * 
      * @param input The input text to convert
      * @return The converted text
@@ -67,6 +83,9 @@ public class TextUtils {
 
     /**
      * Applies {@link #uncolorize(String)} to all elements in a {@link List}
+     * <br>
+     * <br>
+     * This method <code>null</code>-forwards, so if the input is <code>null</code>, the method will return <code>null</code>.
      * 
      * @param input The input list of text to convert
      * @return The converted list

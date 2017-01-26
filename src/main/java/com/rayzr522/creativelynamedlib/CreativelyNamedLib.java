@@ -9,8 +9,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.rayzr522.creativelynamedlib.gui.Component;
 import com.rayzr522.creativelynamedlib.gui.GUI;
 import com.rayzr522.creativelynamedlib.gui.GuiListener;
-import com.rayzr522.creativelynamedlib.utils.Point;
-import com.rayzr522.creativelynamedlib.utils.Size;
+import com.rayzr522.creativelynamedlib.utils.types.Point;
+import com.rayzr522.creativelynamedlib.utils.types.Size;
 
 public class CreativelyNamedLib extends JavaPlugin {
     private static CreativelyNamedLib instance;

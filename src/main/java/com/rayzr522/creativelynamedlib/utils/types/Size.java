@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.rayzr522.creativelynamedlib.utils;
+package com.rayzr522.creativelynamedlib.utils.types;
 
 import org.apache.commons.lang.Validate;
 

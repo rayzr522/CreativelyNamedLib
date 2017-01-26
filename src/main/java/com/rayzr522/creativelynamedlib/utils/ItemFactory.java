@@ -12,6 +12,8 @@ import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import com.rayzr522.creativelynamedlib.utils.text.TextUtils;
+
 /**
  * @author Rayzr
  *
@@ -171,7 +173,7 @@ public class ItemFactory {
      */
     public ItemFactory setLore(String... lore) {
         // TODO: 1/25/17 - Better way to make a mutable List from an array?
-        return setLore(new ArrayList<String>(Arrays.asList(lore)));
+        return setLore(Arrays.asList(lore));
     }
 
     /**

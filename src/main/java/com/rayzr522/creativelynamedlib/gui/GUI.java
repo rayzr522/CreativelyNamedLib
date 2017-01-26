@@ -16,8 +16,8 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import com.rayzr522.creativelynamedlib.utils.ItemFactory;
-import com.rayzr522.creativelynamedlib.utils.Point;
-import com.rayzr522.creativelynamedlib.utils.TextUtils;
+import com.rayzr522.creativelynamedlib.utils.text.TextUtils;
+import com.rayzr522.creativelynamedlib.utils.types.Point;
 
 public class GUI implements InventoryHolder {
 
