@@ -47,6 +47,13 @@ public class GUI implements InventoryHolder {
     }
 
     /**
+     * Closes the {@link GUI} if it is open
+     */
+    public void close() {
+        getInventory().getViewers().forEach(e -> e.closeInventory());
+    }
+
+    /**
      * Adds a new component to this {@link GUI}
      * 
      * @param component The component to add
@@ -69,7 +76,11 @@ public class GUI implements InventoryHolder {
             return;
         }
         Component component = possible.get(possible.size() - 1);
-        component.getClickHandler().ifPresent(handler -> handler.accept(new ClickEvent(raw, this, component)));
+        ClickEvent event = new ClickEvent(raw, this, component);
+        component.getClickHandler().ifPresent(handler -> handler.accept(event));
+        if (event.shouldCloseOnClick()) {
+            this.close();
+        }
     }
 
     /**

@@ -8,14 +8,16 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 /**
+ * Represents an extended {@link InventoryClickEvent}. By default the event is set to cancel default click behavior, and to close the {@link GUI} when it completes.
+ * 
  * @author Rayzr
- *
  */
 public class ClickEvent {
 
     private InventoryClickEvent raw;
     private GUI gui;
     private Component component;
+    private boolean closeOnClick = true;
 
     /**
      * Constructs a new {@link ClickEvent} from an {@link InventoryClickEvent}
@@ -103,6 +105,20 @@ public class ClickEvent {
      */
     public Component getComponent() {
         return component;
+    }
+
+    /**
+     * @param closeOnClick Whether or not the {@link GUI} should close when this event has completed. Defaults to <code>true</code>.
+     */
+    public void closeOnClick(boolean closeOnClick) {
+        this.closeOnClick = closeOnClick;
+    }
+
+    /**
+     * @return Whether or not the {@link GUI} should close when this even thas completed. Defaults to <code>true</code>.
+     */
+    public boolean shouldCloseOnClick() {
+        return closeOnClick;
     }
 
 }
