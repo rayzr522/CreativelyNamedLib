@@ -117,18 +117,6 @@ public class Component implements Cloneable {
         }
     }
 
-    /**
-     * This method is called for each slot that the component occupies when it needs to "render"
-     * 
-     * @param gui The {@link GUI} that this component is in
-     * @param offX the offset on the X axis from the origin of the component
-     * @param offY the offset on the Y axis from the origin of the component
-     * @return An {@link ItemFactory} that determines the appearance of the item
-     */
-    protected ItemFactory render() {
-        return item;
-    };
-
     @Override
     public Component clone() {
         try {
