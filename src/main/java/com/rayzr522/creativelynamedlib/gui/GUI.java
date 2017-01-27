@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -50,7 +51,10 @@ public class GUI implements InventoryHolder {
      * Closes the {@link GUI} if it is open
      */
     public void close() {
-        getInventory().getViewers().forEach(e -> e.closeInventory());
+        HumanEntity[] entities = getInventory().getViewers().toArray(new HumanEntity[0]);
+        for (HumanEntity entity : entities) {
+            entity.closeInventory();
+        }
     }
 
     /**
@@ -76,11 +80,14 @@ public class GUI implements InventoryHolder {
             return;
         }
         Component component = possible.get(possible.size() - 1);
-        ClickEvent event = new ClickEvent(raw, this, component);
-        component.getClickHandler().ifPresent(handler -> handler.accept(event));
-        if (event.shouldCloseOnClick()) {
-            this.close();
-        }
+
+        component.getClickHandler().ifPresent(handler -> {
+            ClickEvent event = new ClickEvent(raw, this, component);
+            handler.accept(event);
+            if (event.shouldCloseOnClick()) {
+                this.close();
+            }
+        });
     }
 
     /**

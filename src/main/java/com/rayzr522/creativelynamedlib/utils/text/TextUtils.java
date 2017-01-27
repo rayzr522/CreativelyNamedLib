@@ -3,6 +3,7 @@
  */
 package com.rayzr522.creativelynamedlib.utils.text;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +16,8 @@ import org.bukkit.ChatColor;
  * @author Rayzr
  */
 public class TextUtils {
+
+    private static final DecimalFormat FORMATTER = new DecimalFormat("#,###.##");
 
     /**
      * Translates ampersand (<code>&</code>) color/formatting codes to internal Minecraft color/formatting codes that use the section sign (<code>\u00A7</code>)
@@ -92,6 +95,24 @@ public class TextUtils {
      */
     public static List<String> uncolorize(List<String> input) {
         return input == null ? null : input.stream().map(TextUtils::uncolorize).collect(Collectors.toList());
+    }
+
+    /**
+     * @param number The number to format
+     * @return The formatted number
+     * @see java.text.NumberFormat#format(double)
+     */
+    public static String format(double number) {
+        return FORMATTER.format(number);
+    }
+
+    /**
+     * @param number The number to format
+     * @return The formatted number
+     * @see java.text.NumberFormat#format(long)
+     */
+    public static String format(long number) {
+        return FORMATTER.format(number);
     }
 
 }
