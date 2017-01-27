@@ -4,7 +4,7 @@
 package com.rayzr522.creativelynamedlib.utils;
 
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * @author Rayzr
@@ -20,7 +20,7 @@ public class RandomItem {
      * @return The item
      */
     public static <T> T fromList(List<T> list) {
-        return list.get(new Random().nextInt(list.size()));
+        return list.get(ThreadLocalRandom.current().nextInt(list.size()));
     }
 
 }

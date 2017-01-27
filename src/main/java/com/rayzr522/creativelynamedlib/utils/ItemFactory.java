@@ -5,9 +5,10 @@ package com.rayzr522.creativelynamedlib.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
+import java.util.EnumSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -22,11 +23,10 @@ import com.rayzr522.creativelynamedlib.utils.text.TextUtils;
  */
 public class ItemFactory {
 
-    private static final List<Material> COLORABLE = Collections.unmodifiableList(Arrays.asList(
-            Material.WOOL, Material.STAINED_CLAY, Material.INK_SACK, Material.STAINED_GLASS, Material.STAINED_GLASS_PANE, Material.CARPET, Material.BANNER));
+    private static final Set<Material> COLORABLE = EnumSet.of(Material.WOOL, Material.STAINED_CLAY, Material.INK_SACK, Material.STAINED_GLASS, Material.STAINED_GLASS_PANE, Material.CARPET,
+            Material.BANNER);
 
-    private static final List<Material> COLOR_INVERT = Collections.unmodifiableList(Arrays.asList(
-            Material.INK_SACK, Material.BANNER));
+    private static final Set<Material> COLOR_INVERT = EnumSet.of(Material.INK_SACK, Material.BANNER);
 
     private ItemStack base;
 
