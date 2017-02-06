@@ -115,4 +115,21 @@ public class TextUtils {
         return FORMATTER.format(number);
     }
 
+    /**
+     * @param input the input to convert to camel case
+     * @return
+     */
+    public static String camelCase(String input) {
+        StringBuilder builder = new StringBuilder();
+        String[] split = input.toLowerCase().split(" ");
+        for (String str : split) {
+            if (str.length() < 2) {
+                builder.append(str.toUpperCase());
+            } else {
+                builder.append(str.substring(0, 1).toUpperCase()).append(str.substring(1));
+            }
+        }
+        return builder.toString();
+    }
+
 }

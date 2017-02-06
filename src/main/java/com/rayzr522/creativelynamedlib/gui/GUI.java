@@ -70,6 +70,14 @@ public class GUI implements InventoryHolder {
         this.components.put(component.clone(), position);
         return this;
     }
+    
+    /**
+     * This returns a direct reference to the components map of this {@link GUI}. <em>WARNING: Modifying this will modify the actual components of the GUI!</em>
+     * @return The components map
+     */
+    public Map<Component, Point> getComponents() {
+        return components;
+    }
 
     void handleClick(InventoryClickEvent raw) {
         int slot = raw.getRawSlot(), col = getColumns();
@@ -94,6 +102,7 @@ public class GUI implements InventoryHolder {
      * Re-render all components of this {@link GUI}
      */
     public void reRender() {
+        inventory.setContents(new ItemStack[0]);
         components.entrySet().stream().forEach(e -> e.getKey().render(this, e.getValue()));
     }
 
