@@ -13,7 +13,7 @@ import org.bukkit.event.inventory.InventoryType;
  * @author Rayzr
  *
  */
-public class GuiListener implements Listener {
+public class GUIListener implements Listener {
 
     @EventHandler
     public void onClick(InventoryClickEvent event) {
