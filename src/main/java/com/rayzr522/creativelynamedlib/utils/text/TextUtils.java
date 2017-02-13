@@ -5,6 +5,7 @@ package com.rayzr522.creativelynamedlib.utils.text;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -116,20 +117,22 @@ public class TextUtils {
     }
 
     /**
-     * @param input the input to convert to camel case
-     * @return
+     * @param input The input to convert to camelCase
+     * @return The camelCase string
      */
     public static String camelCase(String input) {
-        StringBuilder builder = new StringBuilder();
         String[] split = input.toLowerCase().split(" ");
-        for (String str : split) {
+        for (int i = 0; i < split.length; i++) {
+            if (i == 0)
+                continue;
+            String str = split[i];
             if (str.length() < 2) {
-                builder.append(str.toUpperCase());
+                split[i] = str.toUpperCase();
             } else {
-                builder.append(str.substring(0, 1).toUpperCase()).append(str.substring(1));
+                split[i] = str.substring(0, 1).toUpperCase() + str.substring(1);
             }
         }
-        return builder.toString();
+        return Arrays.stream(split).collect(Collectors.joining(" "));
     }
 
 }

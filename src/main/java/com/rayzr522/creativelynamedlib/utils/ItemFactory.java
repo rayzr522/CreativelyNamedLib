@@ -132,7 +132,7 @@ public class ItemFactory {
         }
 
         @SuppressWarnings("deprecation")
-        byte data = (byte) (COLOR_INVERT.contains(base.getType()) ? 15 - color.getData() : color.getData());
+        byte data = (byte) (COLOR_INVERT.contains(base.getType()) ? 15 - color.getDyeData() : color.getDyeData());
 
         return setDurability(data);
     }

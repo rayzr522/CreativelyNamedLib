@@ -43,7 +43,15 @@ public class GUI implements InventoryHolder {
      * @param player The {@link Player} to open this {@link GUI} for
      */
     public void open(Player player) {
-        reRender();
+        open(player, false);
+    }
+
+    /**
+     * @param player The {@link Player} to open this {@link GUI} for
+     */
+    public void open(Player player, boolean reRender) {
+        if (reRender)
+            reRender();
         player.openInventory(getInventory());
     }
 
@@ -70,9 +78,10 @@ public class GUI implements InventoryHolder {
         this.components.put(component.clone(), position);
         return this;
     }
-    
+
     /**
      * This returns a direct reference to the components map of this {@link GUI}. <em>WARNING: Modifying this will modify the actual components of the GUI!</em>
+     * 
      * @return The components map
      */
     public Map<Component, Point> getComponents() {
@@ -125,6 +134,13 @@ public class GUI implements InventoryHolder {
     public void setItem(int slot, ItemStack item) {
         Validate.isTrue(slot >= 0 && slot < inventory.getSize(), "slot must be between 0 and " + (inventory.getSize() - 1));
         inventory.setItem(slot, item);
+    }
+
+    /**
+     * @return The number of rows for this GUI
+     */
+    public int getRows() {
+        return inventory.getContents().length / getColumns();
     }
 
     /**

@@ -27,6 +27,7 @@ public class Component implements Cloneable {
 
     private Consumer<ClickEvent> clickHandler = null;
     private RenderHandler renderHandler = (gui, offset) -> {
+        System.out.println(getItem().build().getType().name());
         return getItem();
     };
 
