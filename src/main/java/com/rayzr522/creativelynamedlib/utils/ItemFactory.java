@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -132,7 +134,7 @@ public class ItemFactory {
         }
 
         @SuppressWarnings("deprecation")
-        byte data = (byte) (COLOR_INVERT.contains(base.getType()) ? 15 - color.getDyeData() : color.getDyeData());
+        byte data = (byte) (COLOR_INVERT.contains(base.getType()) ? color.getDyeData() : 15 - color.getDyeData());
 
         return setDurability(data);
     }
@@ -198,7 +200,6 @@ public class ItemFactory {
      * @return This {@link ItemFactory} instance
      */
     public ItemFactory setLore(String... lore) {
-        // TODO: 1/25/17 - Better way to make a mutable List from an array?
         return setLore(Arrays.asList(lore));
     }
 
@@ -232,6 +233,49 @@ public class ItemFactory {
      */
     public ItemFactory addLore(String... lore) {
         return addLore(Arrays.asList(lore));
+    }
+
+    /**
+     * Gets the enchantments of this item
+     * 
+     * @return The item's enchantments
+     */
+    public Map<Enchantment, Integer> getEnchantments() {
+        return base.getEnchantments();
+    }
+
+    /**
+     * Sets the enchantments on this item. <b>WARNING:</b> this method accepts "unsafe" enchantments, those that have levels greater than the max level!
+     * 
+     * @param enchantments The enchantments to set
+     * @return This {@link ItemFactory} instance
+     */
+    public ItemFactory setEnchants(Map<Enchantment, Integer> enchantments) {
+        base.getEnchantments().clear();
+        return addEnchants(enchantments);
+    }
+
+    /**
+     * Adds multiple enchantments to this item. <b>WARNING:</b> this method accepts "unsafe" enchantments, those that have levels greater than the max level!
+     * 
+     * @param enchantments The enchantments to add
+     * @return This {@link ItemFactory} instance
+     */
+    public ItemFactory addEnchants(Map<Enchantment, Integer> enchantments) {
+        base.addUnsafeEnchantments(enchantments);
+        return this;
+    }
+
+    /**
+     * Adds an enchantment to this item. <b>WARNING:</b> this method accepts "unsafe" enchantments, those that have levels greater than the max level!
+     * 
+     * @param enchantment The enchantment to add
+     * @param level The level of the enchantment (this can be an unsafe level)
+     * @return This {@link ItemFactory} instance
+     */
+    public ItemFactory addEnchant(Enchantment enchantment, int level) {
+        base.addUnsafeEnchantment(enchantment, level);
+        return this;
     }
 
     /**

@@ -11,6 +11,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
@@ -23,8 +24,9 @@ import com.rayzr522.creativelynamedlib.utils.types.Point;
 public class GUI implements InventoryHolder {
 
     private Map<Component, Point> components = new LinkedHashMap<>();
-
     private Inventory inventory;
+
+    private boolean allowClosing = true;
 
     public GUI(InventoryType type, String title) {
         this.inventory = Bukkit.createInventory(this, type, TextUtils.colorize(title));
@@ -43,7 +45,7 @@ public class GUI implements InventoryHolder {
      * @param player The {@link Player} to open this {@link GUI} for
      */
     public void open(Player player) {
-        open(player, false);
+        open(player, true);
     }
 
     /**
@@ -60,9 +62,23 @@ public class GUI implements InventoryHolder {
      */
     public void close() {
         HumanEntity[] entities = getInventory().getViewers().toArray(new HumanEntity[0]);
+        
+        boolean reset = allowClosing;
+        allowClosing = true;
+        
         for (HumanEntity entity : entities) {
             entity.closeInventory();
         }
+        
+        allowClosing = reset;
+    }
+
+    /**
+     * Override this method to add behaviour to GUIs when they close
+     * 
+     * @param event The {@link InventoryCloseEvent}
+     */
+    public void onClose(InventoryCloseEvent event) {
     }
 
     /**
@@ -77,6 +93,24 @@ public class GUI implements InventoryHolder {
         Objects.requireNonNull(position, "position cannot be null!");
         this.components.put(component.clone(), position);
         return this;
+    }
+
+    /**
+     * Sets whether the {@link GUI} should be allowed to close. Defaults to <code>true</code>. This does not affect calling {@link #close()}
+     * 
+     * @param allowClosing Whether or not the GUI should be allowed to close
+     * @return This {@link GUI} instance
+     */
+    public GUI setAllowClosing(boolean allowClosing) {
+        this.allowClosing = allowClosing;
+        return this;
+    }
+    
+    /**
+     * @return Whether or not the {@link GUI} should be allowed to close. Defaults to <code>true</code>.
+     */
+    public boolean allowClosing() {
+        return allowClosing;
     }
 
     /**

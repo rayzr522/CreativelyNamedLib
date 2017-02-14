@@ -4,6 +4,8 @@
 package com.rayzr522.creativelynamedlib.utils;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -30,8 +32,29 @@ public class RandomItem {
      * @param array The array to get the item from
      * @return The item
      */
-    public static <T> T from(T[] array) {
+    @SafeVarargs
+    public static <T> T from(T... array) {
         return array[ThreadLocalRandom.current().nextInt(array.length)];
+    }
+
+    /**
+     * Returns a random item from a map of weights (stored as doubles)
+     * 
+     * @param weights The weights
+     * @return The item
+     */
+    public static <T> T fromWeights(Map<Double, T> weights) {
+        double total = weights.keySet().stream().reduce(0.0, (a, b) -> a + b);
+        double number = ThreadLocalRandom.current().nextDouble(total);
+
+        for (Entry<Double, T> entry : weights.entrySet()) {
+            if (number < entry.getKey()) {
+                return entry.getValue();
+            }
+            number -= entry.getKey();
+        }
+
+        return null;
     }
 
 }
