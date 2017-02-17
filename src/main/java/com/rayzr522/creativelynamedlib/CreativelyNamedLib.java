@@ -1,9 +1,13 @@
 package com.rayzr522.creativelynamedlib;
 
+import static org.bukkit.ChatColor.*;
+import static com.rayzr522.creativelynamedlib.utils.types.Point.at;
+
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,10 +15,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.rayzr522.creativelynamedlib.gui.Component;
 import com.rayzr522.creativelynamedlib.gui.GUI;
 import com.rayzr522.creativelynamedlib.gui.GUIListener;
+import com.rayzr522.creativelynamedlib.utils.ItemFactory;
 import com.rayzr522.creativelynamedlib.utils.text.JSONMessage;
-
-import static org.bukkit.ChatColor.*;
-import static com.rayzr522.creativelynamedlib.utils.types.Point.at;
 
 public class CreativelyNamedLib extends JavaPlugin {
     private static CreativelyNamedLib instance;
@@ -107,6 +109,16 @@ public class CreativelyNamedLib extends JavaPlugin {
             }
 
             gui.open(player);
+
+        } else if (sub.equals("enchant")) {
+
+            player.getInventory().addItem(
+                    ItemFactory.of(Material.DIAMOND_SWORD)
+                            .addEnchant(Enchantment.DURABILITY, 5)
+                            .clearEnchants()
+                            .addEnchant(Enchantment.DURABILITY, 10)
+                            .clearEnchants()
+                            .addEnchant(Enchantment.DAMAGE_ALL, 10).build());
 
         }
 

@@ -6,6 +6,7 @@ package com.rayzr522.creativelynamedlib.config;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.bukkit.configuration.ConfigurationSection;
 
@@ -32,7 +33,11 @@ public class Messages {
                 prefix = TextUtils.colorize(config.getString(key));
                 continue;
             }
-            messages.put(key, config.getString(key));
+            if (config.isList(key)) {
+                messages.put(key, config.getStringList(key).stream().collect(Collectors.joining("\n")));
+            } else {
+                messages.put(key, config.getString(key));
+            }
         }
     }
 
@@ -58,7 +63,7 @@ public class Messages {
      * @return The translated message
      */
     public String tr(String key, Object... objects) {
-        return prefix + trRaw(key, objects);
+        return prefix + trRaw(key, objects).replace("\n", "\n" + prefix);
     }
 
     /**
@@ -71,7 +76,7 @@ public class Messages {
     public String trRaw(String key, Object... objects) {
         String message = messages.getOrDefault(key, key);
         for (int i = 0; i < objects.length; i++) {
-            message = message.replaceAll(String.format("\\{%d\\}", i), objects[i].toString());
+            message = message.replace(String.format("{%d}", i), objects[i].toString());
         }
         return TextUtils.colorize(message);
     }

@@ -43,15 +43,15 @@ public class RandomItem {
      * @param weights The weights
      * @return The item
      */
-    public static <T> T fromWeights(Map<Double, T> weights) {
-        double total = weights.keySet().stream().reduce(0.0, (a, b) -> a + b);
+    public static <T> T fromWeights(Map<T, Double> weights) {
+        double total = weights.values().stream().reduce(0.0, (a, b) -> a + b);
         double number = ThreadLocalRandom.current().nextDouble(total);
 
-        for (Entry<Double, T> entry : weights.entrySet()) {
-            if (number < entry.getKey()) {
-                return entry.getValue();
+        for (Entry<T, Double> entry : weights.entrySet()) {
+            if (number < entry.getValue()) {
+                return entry.getKey();
             }
-            number -= entry.getKey();
+            number -= entry.getValue();
         }
 
         return null;

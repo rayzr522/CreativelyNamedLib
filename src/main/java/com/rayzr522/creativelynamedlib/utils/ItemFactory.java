@@ -11,9 +11,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.apache.commons.lang.Validate;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -129,9 +131,7 @@ public class ItemFactory {
      * @throws IllegalStateException If the item is not a colorable type
      */
     public ItemFactory setColor(DyeColor color) {
-        if (!COLORABLE.contains(base.getType())) {
-            throw new IllegalStateException("item is not colorable!");
-        }
+        Validate.isTrue(COLORABLE.contains(base.getType()), "item is not colorable!");
 
         @SuppressWarnings("deprecation")
         byte data = (byte) (COLOR_INVERT.contains(base.getType()) ? color.getDyeData() : 15 - color.getDyeData());
@@ -188,6 +188,8 @@ public class ItemFactory {
      * @return This {@link ItemFactory} instance
      */
     public ItemFactory setLore(List<String> lore) {
+        Objects.requireNonNull(lore, "lore cannot be null!");
+
         ItemMeta meta = getItemMeta();
         meta.setLore(TextUtils.colorize(lore));
         return setItemMeta(meta);
@@ -200,6 +202,8 @@ public class ItemFactory {
      * @return This {@link ItemFactory} instance
      */
     public ItemFactory setLore(String... lore) {
+        Objects.requireNonNull(lore, "lore cannot be null!");
+
         return setLore(Arrays.asList(lore));
     }
 
@@ -220,6 +224,8 @@ public class ItemFactory {
      * @return This {@link ItemFactory} instance
      */
     public ItemFactory addLore(List<String> lore) {
+        Objects.requireNonNull(lore, "lore cannot be null!");
+
         List<String> newLore = getLore();
         newLore.addAll(lore);
         return setLore(newLore);
@@ -232,6 +238,8 @@ public class ItemFactory {
      * @return This {@link ItemFactory} instance
      */
     public ItemFactory addLore(String... lore) {
+        Objects.requireNonNull(lore, "lore cannot be null!");
+
         return addLore(Arrays.asList(lore));
     }
 
@@ -245,14 +253,34 @@ public class ItemFactory {
     }
 
     /**
+     * Removes a given enchantment from this item
+     * 
+     * @param enchantment The enchantment to remove
+     * @return This {@link ItemFactory} instance
+     */
+    public ItemFactory removeEnchant(Enchantment enchantment) {
+        base.removeEnchantment(enchantment);
+        return this;
+    }
+
+    /**
+     * Removes all the enchantments of this item
+     * 
+     * @return This {@link ItemFactory} instance
+     */
+    public ItemFactory clearEnchants() {
+        getEnchantments().entrySet().iterator().forEachRemaining(e -> removeEnchant(e.getKey()));
+        return this;
+    }
+
+    /**
      * Sets the enchantments on this item. <b>WARNING:</b> this method accepts "unsafe" enchantments, those that have levels greater than the max level!
      * 
      * @param enchantments The enchantments to set
      * @return This {@link ItemFactory} instance
      */
     public ItemFactory setEnchants(Map<Enchantment, Integer> enchantments) {
-        base.getEnchantments().clear();
-        return addEnchants(enchantments);
+        return clearEnchants().addEnchants(enchantments);
     }
 
     /**
@@ -262,7 +290,8 @@ public class ItemFactory {
      * @return This {@link ItemFactory} instance
      */
     public ItemFactory addEnchants(Map<Enchantment, Integer> enchantments) {
-        base.addUnsafeEnchantments(enchantments);
+        if (enchantments != null)
+            base.addUnsafeEnchantments(enchantments);
         return this;
     }
 
@@ -276,6 +305,18 @@ public class ItemFactory {
     public ItemFactory addEnchant(Enchantment enchantment, int level) {
         base.addUnsafeEnchantment(enchantment, level);
         return this;
+    }
+
+    /**
+     * Adds {@link ItemFlag}s to this item
+     * 
+     * @param flags The flags to add
+     * @return This {@link ItemFactory} instance
+     */
+    public ItemFactory addItemFlags(ItemFlag... flags) {
+        ItemMeta meta = getItemMeta();
+        meta.addItemFlags(flags);
+        return setItemMeta(meta);
     }
 
     /**
