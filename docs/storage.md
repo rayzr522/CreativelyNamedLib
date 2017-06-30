@@ -3,3 +3,5 @@
 - Load on request
 - Mark as dirty
 - Only save dirty files
+- Expire data after X milliseconds
+- Save on expiration (only if dirty, of course)
