@@ -1,8 +1,12 @@
 package me.rayzr522.cnl;
 
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.logging.Logger;
+
 public class CreativelyNamedLib extends JavaPlugin {
+    private static final boolean TESTING = Bukkit.getServer() == null;
     private static CreativelyNamedLib instance;
 
     /**
@@ -10,6 +14,10 @@ public class CreativelyNamedLib extends JavaPlugin {
      */
     public static CreativelyNamedLib getInstance() {
         return instance;
+    }
+
+    public static Logger getDebugLogger() {
+        return TESTING ? Logger.getLogger("CreativelyNamedLib|Test") : getInstance().getLogger();
     }
 
     @Override
@@ -20,6 +28,9 @@ public class CreativelyNamedLib extends JavaPlugin {
     @Override
     public void onEnable() {
         // TODO: Start doing work
+        getConfig().getValues(false).forEach((key, value) -> {
+            getLogger().info(key + " - " + value.getClass().toString());
+        });
     }
 
     @Override
