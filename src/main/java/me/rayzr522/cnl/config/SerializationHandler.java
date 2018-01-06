@@ -1,12 +1,21 @@
 package me.rayzr522.cnl.config;
 
-public interface SerializationHandler<T extends Object> {
-    T deserialize(Object value);
+import java.util.Map;
 
-    Object serialize(T value);
+public interface SerializationHandler<T> {
+    /**
+     * Serializes an object into raw data.
+     *
+     * @param object The object to serialize.
+     * @return The serialized data.
+     */
+    Map<String, Object> serialize(T object);
 
-    @SuppressWarnings("unchecked")
-    default Object _impl_serialize(Object value) {
-        return serialize((T) value);
-    }
+    /**
+     * Deserializes raw data into an object.
+     *
+     * @param data The data to deserialize.
+     * @return The deserialized object.
+     */
+    T deserialize(Map<String, Object> data);
 }
